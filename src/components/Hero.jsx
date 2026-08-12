@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="container">
         <div className="row">
           <div className="col-lg-7">
-            <span className="badge-pill-soft mb-6 fs-6">
+            <span className="badge-pill-soft mb-3">
               <i className="bi bi-stars me-1"></i> Impresión 3D para verdaderos fans
             </span>
             <h1 className="hero-title fw-bold mb-3">
@@ -18,10 +18,10 @@ export default function Hero() {
             </p>
 
             <div className="d-flex flex-wrap gap-3 mb-4">
-              <Link to="/catalogo" className="btn btn-lg btn-fans3d-red rounded-pill px-5 py-3 fs-5">
+              <Link to="/catalogo" className="btn btn-fans3d-red rounded-pill px-4 py-2 fs-6">
                 <i className="bi bi-bag-fill me-2"></i>Ver catálogo
               </Link>
-              <Link to="/personalizados" className="btn btn-lg btn-outline-dark rounded-pill px-5 py-3 fs-5">
+              <Link to="/personalizados" className="btn btn-outline-dark rounded-pill px-4 py-2 fs-6">
                 <i className="bi bi-send-fill me-2"></i>Cotizar personalizado
               </Link>
             </div>

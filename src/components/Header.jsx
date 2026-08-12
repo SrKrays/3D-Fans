@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3 py-lg-4">
+    <nav className="navbar navbar-expand-lg bg-white border-bottom sticky-top py-2 py-lg-1">
       <div className="container">
         <Link className="navbar-brand navbar-brand-fans3d d-flex align-items-center gap-2" to="/">
-          <img src="/img/logo.jpeg" alt="Fans3D" className="navbar-logo-img" style={{ width: 70, height: 70 }} />
+          <img src="/img/logo.jpeg" alt="Fans3D" className="navbar-logo-img" style={{ width: 48, height: 48 }} />
           <span>
             Fans<span className="text-fans3d-blue">3D</span>
           </span>
@@ -48,7 +48,7 @@ export default function Header() {
             </li>
           </ul>
 
-          <Link to="/personalizados" className="btn btn-lg btn-fans3d-yellow rounded-pill px-4 mt-3 mt-lg-0">
+          <Link to="/personalizados" className="btn btn-fans3d-yellow rounded-pill px-3 py-2 mt-3 mt-lg-0">
             <i className="bi bi-rocket-takeoff-fill me-1"></i> Cotizar pieza
           </Link>
         </div>

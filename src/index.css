@@ -13,12 +13,12 @@ body {
 }
 
 .navbar-brand-fans3d {
-  font-weight: 1000;
-  font-size: 3.5rem; /* tamaño del texto "Fans3D" del logo */
+  font-weight: 800;
+  font-size: 1.5rem; /* tamaño del texto "Fans3D" del logo */
 }
 
 .navbar-nav-fans3d .nav-link {
-  font-size: 1.4rem; /* tamaño de los links del menú (Inicio, Catálogo, etc.) */
+  font-size: 0.95rem; /* tamaño de los links del menú (Inicio, Catálogo, etc.) */
 }
 
 .btn-fans3d-yellow {
@@ -83,19 +83,19 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(5rem, 5vw, 5rem);
+  font-size: clamp(4rem, 4vw, 4rem); /* -20% del 5rem anterior */
   line-height: 1;
 }
 
 .hero-subtitle {
-  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
 }
 
 .hero-features {
-  font-size: 1rem; /* tamaño de "Impresión 3D de alta calidad", etc. */
+  font-size: 0.8rem; /* tamaño de "Impresión 3D de alta calidad", etc. */
 }
 .hero-features i {
-  font-size: 1rem; /* tamaño de los iconitos de esa fila */
+  font-size: 0.8rem; /* tamaño de los iconitos de esa fila */
 }
 
 @media (max-width: 991px) {
@@ -120,8 +120,8 @@ body {
   color: var(--f3d-blue);
   font-weight: 600;
   border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.7rem;
   display: inline-block;
 }
 
@@ -138,7 +138,7 @@ body {
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 .category-card .cat-thumb {
-  height: 190px;
+  height: 160px;
   position: relative;
   display: flex;
   align-items: center;
@@ -174,7 +174,7 @@ body {
   padding: 1.5rem 0.5rem 0.6rem;
   text-align: center;
   font-weight: 700;
-  font-size: 0.9rem; /* subí/bajá este valor si lo querés más grande o chico */
+  font-size: 0.9rem;
   line-height: 1.2;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
