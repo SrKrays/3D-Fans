@@ -37,38 +37,77 @@ export default function ProcessSection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = cardRefs.current.filter(Boolean)
+      const mm = gsap.matchMedia()
 
-      gsap.set(cards, { opacity: 0.25, y: 40, scale: 0.94 })
+      // Desktop: la sección se fija en pantalla y los pasos se van
+      // revelando a medida que se scrollea (scrollytelling con pin).
+      mm.add('(min-width: 992px)', () => {
+        gsap.set(cards, { opacity: 0.25, y: 40, scale: 0.94 })
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=1200',
-          scrub: 1,
-          pin: pinRef.current,
-        },
-      })
-
-      cards.forEach((card, i) => {
-        tl.to(card, { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' }, i)
-        if (i > 0) {
-          tl.to(cards[i - 1], { opacity: 0.4, scale: 0.96, duration: 1 }, i)
-        }
-      })
-
-      if (fillRef.current) {
-        gsap.to(fillRef.current, {
-          width: '100%',
-          ease: 'none',
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top top',
             end: '+=1200',
-            scrub: true,
+            scrub: 1,
+            pin: pinRef.current,
           },
         })
-      }
+
+        cards.forEach((card, i) => {
+          tl.to(card, { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power2.out' }, i)
+          if (i > 0) {
+            tl.to(cards[i - 1], { opacity: 0.4, scale: 0.96, duration: 1 }, i)
+          }
+        })
+
+        if (fillRef.current) {
+          gsap.to(fillRef.current, {
+            width: '100%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top top',
+              end: '+=1200',
+              scrub: true,
+            },
+          })
+        }
+      })
+
+      // Celular/tablet: nada de pin (scrollear "atrapado" en una pantalla
+      // chica se siente incómodo). Cada card entra con un fade+slide simple
+      // apenas aparece, y la barra de progreso se completa de una.
+      mm.add('(max-width: 991px)', () => {
+        gsap.set(cards, { opacity: 1, y: 0, scale: 1 })
+
+        cards.forEach((card, i) => {
+          gsap.from(card, {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            delay: i * 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 88%',
+            },
+          })
+        })
+
+        if (fillRef.current) {
+          gsap.set(fillRef.current, { width: '0%' })
+          gsap.to(fillRef.current, {
+            width: '100%',
+            duration: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 70%',
+            },
+          })
+        }
+      })
     }, sectionRef)
 
     return () => ctx.revert()
@@ -82,7 +121,7 @@ export default function ProcessSection() {
           Cómo trabajamos
         </h2>
         <p className="text-secondary mb-4">
-          Scrolleá para ver el recorrido de tu pieza, del pedido a tu casa.
+          Del pedido a tu casa: así es el recorrido de tu pieza.
         </p>
 
         <div className="process-progress mb-4">

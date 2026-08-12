@@ -20,12 +20,11 @@ export default function Hero() {
 
   useEffect(() => {
     let split
-    let handleMove
-    let handleLeave
 
     const ctx = gsap.context(() => {
-      // Título: se separa en caracteres y entra en cascada, tipo cada
-      // letra "cayendo" a su lugar.
+      // Estas dos corren siempre, en cualquier tamaño de pantalla: son
+      // animaciones de entrada (una sola vez al cargar), no de scroll/mouse,
+      // así que no tienen costo de rendimiento en celular.
       split = new SplitText(titleRef.current, { type: 'chars,words' })
       gsap.from(split.chars, {
         opacity: 0,
@@ -38,8 +37,6 @@ export default function Hero() {
         delay: 0.15,
       })
 
-      // Garabato debajo del título: arranca "sin dibujar" y se traza solo,
-      // como si lo estuviera imprimiendo la boquilla de una impresora 3D.
       if (squigglePathRef.current) {
         gsap.fromTo(
           squigglePathRef.current,
@@ -48,65 +45,81 @@ export default function Hero() {
         )
       }
 
-      // Parallax sutil: el contenido de texto se desplaza un poco más
-      // rápido que el fondo a medida que se scrollea el hero, para dar
-      // sensación de profundidad.
-      gsap.to(contentRef.current, {
-        yPercent: -12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
+      // gsap.matchMedia separa lo que corre en desktop de lo que corre en
+      // celular/tablet, y se reajusta solo si el usuario rota la pantalla o
+      // cambia el tamaño de ventana entre medio.
+      const mm = gsap.matchMedia()
 
-      // Destellos titilando sobre las figuras del banner, como los que ya
-      // están dibujados en la imagen — la idea es que se sientan "vivos".
-      sparkleRefs.current.forEach((el, i) => {
-        if (!el) return
-        gsap.to(el, {
-          opacity: 0.25,
-          scale: 0.6,
-          duration: 1.1 + (i % 3) * 0.2,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: sparkles[i].delay,
+      mm.add('(min-width: 992px)', () => {
+        // Parallax sutil del texto al scrollear.
+        gsap.to(contentRef.current, {
+          yPercent: -12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
         })
-      })
 
-      // Brillo que sigue al mouse sobre el banner, sutil, tipo spotlight.
-      if (glowRef.current) {
+        // Destellos titilando sobre las figuras del banner.
+        sparkleRefs.current.forEach((el, i) => {
+          if (!el) return
+          gsap.to(el, {
+            opacity: 0.25,
+            scale: 0.6,
+            duration: 1.1 + (i % 3) * 0.2,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: sparkles[i].delay,
+          })
+        })
+
+        // Brillo que sigue al mouse — solo tiene sentido con cursor, por eso
+        // va únicamente en el breakpoint de escritorio.
+        if (!glowRef.current) return
         const xTo = gsap.quickTo(glowRef.current, 'left', { duration: 0.7, ease: 'power3' })
         const yTo = gsap.quickTo(glowRef.current, 'top', { duration: 0.7, ease: 'power3' })
 
-        handleMove = (e) => {
+        const handleMove = (e) => {
           const rect = sectionRef.current.getBoundingClientRect()
           xTo(e.clientX - rect.left)
           yTo(e.clientY - rect.top)
           gsap.to(glowRef.current, { opacity: 1, duration: 0.3 })
         }
-        handleLeave = () => gsap.to(glowRef.current, { opacity: 0, duration: 0.4 })
+        const handleLeave = () => gsap.to(glowRef.current, { opacity: 0, duration: 0.4 })
 
         sectionRef.current.addEventListener('mousemove', handleMove)
         sectionRef.current.addEventListener('mouseleave', handleLeave)
-      }
+
+        // gsap.matchMedia limpia esto solo (listeners incluidos) apenas la
+        // media query deja de cumplirse o el componente se desmonta.
+        return () => {
+          sectionRef.current?.removeEventListener('mousemove', handleMove)
+          sectionRef.current?.removeEventListener('mouseleave', handleLeave)
+        }
+      })
+
+      mm.add('(max-width: 991px)', () => {
+        // En celular/tablet: nada de parallax por scroll ni efectos de
+        // mouse. El garabato y el título ya animaron arriba, con eso alcanza.
+        gsap.set(glowRef.current, { opacity: 0 })
+      })
     }, sectionRef)
 
     return () => {
       ctx.revert()
       split?.revert()
-      if (handleMove) sectionRef.current?.removeEventListener('mousemove', handleMove)
-      if (handleLeave) sectionRef.current?.removeEventListener('mouseleave', handleLeave)
     }
   }, [])
 
   return (
     <section id="inicio" className="hero-section hero-kenburns" ref={sectionRef}>
       {/* Brillo que sigue al cursor + destellos titilando — puramente
-          decorativo, no bloquea clicks (pointer-events: none). */}
+          decorativo, no bloquea clicks (pointer-events: none), y solo se
+          activan en desktop (ver gsap.matchMedia arriba + CSS). */}
       <div className="hero-glow" ref={glowRef}></div>
       {sparkles.map((s, i) => (
         <i
