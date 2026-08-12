@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from '../lib/gsapSetup'
+import Reveal from './Reveal'
 
 export default function CustomOrder() {
   const [fileName, setFileName] = useState(null)
   const [submitted, setSubmitted] = useState(false)
+  const circleRef = useRef(null)
+  const checkRef = useRef(null)
+  const successWrapRef = useRef(null)
 
   function handleFileChange(e) {
     const file = e.target.files?.[0]
@@ -15,11 +20,33 @@ export default function CustomOrder() {
     setSubmitted(true)
   }
 
+  // Cuando se envía el formulario, el círculo y el tilde del ícono de éxito
+  // se "dibujan" solos en vez de aparecer de golpe.
+  useEffect(() => {
+    if (!submitted) return
+    const ctx = gsap.context(() => {
+      gsap.from(successWrapRef.current, { opacity: 0, y: 10, duration: 0.3 })
+      const tl = gsap.timeline({ delay: 0.1 })
+      if (circleRef.current) {
+        tl.fromTo(circleRef.current, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.out' })
+      }
+      if (checkRef.current) {
+        tl.fromTo(
+          checkRef.current,
+          { drawSVG: '0%' },
+          { drawSVG: '100%', duration: 0.35, ease: 'power2.out' },
+          '-=0.1'
+        )
+      }
+    })
+    return () => ctx.revert()
+  }, [submitted])
+
   return (
     <section id="personalizados" className="py-5">
       <div className="container">
         <div className="row align-items-center g-5">
-          <div className="col-lg-5">
+          <Reveal as="div" className="col-lg-5">
             <span className="badge-pill-soft mb-2">
               <i className="bi bi-stars me-1"></i>¿Tenés un modelo o una idea simple?
             </span>
@@ -40,13 +67,32 @@ export default function CustomOrder() {
               <span><i className="bi bi-gem me-1 text-fans3d-blue"></i>Piezas únicas</span>
               <span><i className="bi bi-rulers me-1 text-warning"></i>A medida</span>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="col-lg-7">
+          <Reveal as="div" className="col-lg-7" delay={0.15}>
             <div className="card border-0 shadow-sm rounded-4 p-4">
               {submitted ? (
-                <div className="text-center py-4">
-                  <i className="bi bi-check-circle-fill text-success" style={{ fontSize: '2.5rem' }}></i>
+                <div className="text-center py-4" ref={successWrapRef}>
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" className="mx-auto d-block">
+                    <circle
+                      ref={circleRef}
+                      cx="32"
+                      cy="32"
+                      r="28"
+                      stroke="#28a745"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      ref={checkRef}
+                      d="M20 33L28 41L45 24"
+                      stroke="#28a745"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </svg>
                   <h5 className="fw-bold mt-3">¡Listo! Recibimos tu pedido.</h5>
                   <p className="text-secondary mb-0">Te vamos a contactar a la brevedad con la cotización.</p>
                 </div>
@@ -96,7 +142,7 @@ export default function CustomOrder() {
                 </form>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

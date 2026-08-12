@@ -82,9 +82,67 @@ body {
   pointer-events: none;
 }
 
+/* Ken Burns: zoom lento y continuo sobre la foto del banner (segunda capa
+   del background-image). La primera capa (el degradé) se deja fija en
+   "cover" en todos los frames. */
+@keyframes heroKenBurns {
+  0% {
+    background-size: cover, 100% 100%;
+  }
+  50% {
+    background-size: cover, 112% 112%;
+  }
+  100% {
+    background-size: cover, 100% 100%;
+  }
+}
+.hero-kenburns {
+  animation: heroKenBurns 22s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-kenburns {
+    animation: none;
+  }
+}
+
+.hero-squiggle {
+  display: block;
+  margin-top: -0.5rem;
+}
+
+.hero-sparkle {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 201, 60, 0.9);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  left: 70%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+
+@media (max-width: 991px) {
+  .hero-sparkle,
+  .hero-glow {
+    display: none;
+  }
+}
+
 .hero-title {
   font-size: clamp(2.2rem, 8vw, 4rem); /* -20% del 5rem anterior, escala en celular */
   line-height: 1.05;
+  perspective: 400px;
 }
 
 .hero-subtitle {
@@ -113,6 +171,31 @@ body {
     position: relative;
     z-index: 1;
   }
+}
+
+.fandom-marquee {
+  overflow: hidden;
+  background: var(--f3d-dark);
+  padding: 0.85rem 0;
+}
+.fandom-marquee-track {
+  display: flex;
+  width: max-content;
+}
+.fandom-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  padding: 0 1.5rem;
+}
+.fandom-marquee-item i {
+  color: var(--f3d-yellow);
+}
+.fandom-marquee-item:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .badge-pill-soft {
@@ -187,6 +270,38 @@ body {
   padding-top: 0.75rem;
 }
 
+.process-section {
+  background: #fff;
+}
+.process-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #eee;
+  overflow: hidden;
+}
+.process-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--f3d-blue), var(--f3d-red), var(--f3d-yellow));
+  border-radius: 999px;
+}
+.process-step-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.process-step-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
 .step-circle {
   width: 34px;
   height: 34px;
@@ -214,6 +329,11 @@ body {
   border-radius: 14px;
   border: 1px solid #eee;
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 .event-date-badge {
   min-width: 64px;

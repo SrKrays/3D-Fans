@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { events } from '../data/mockData'
+import Reveal from './Reveal'
 
 export default function Events() {
   return (
@@ -11,24 +12,26 @@ export default function Events() {
         </h2>
 
         <div className="row g-3">
-          {events.map((ev) => (
+          {events.map((ev, i) => (
             <div className="col-md-4" key={ev.id}>
-              <div className="event-card bg-white p-3 h-100 d-flex gap-3">
-                <div className="event-date-badge" style={{ backgroundColor: ev.color }}>
-                  <div className="fs-5">{ev.day}</div>
-                  <div className="small">{ev.month}</div>
+              <Reveal delay={i * 0.08} className="d-block h-100">
+                <div className="event-card bg-white p-3 h-100 d-flex gap-3">
+                  <div className="event-date-badge" style={{ backgroundColor: ev.color }}>
+                    <div className="fs-5">{ev.day}</div>
+                    <div className="small">{ev.month}</div>
+                  </div>
+                  <div className="flex-grow-1">
+                    <h6 className="fw-bold mb-1">{ev.name}</h6>
+                    <p className="small text-secondary mb-1">
+                      <i className="bi bi-geo-alt-fill me-1"></i>{ev.place}
+                    </p>
+                    <p className="small text-secondary mb-2">{ev.stand}</p>
+                    <a href="#contacto" className="btn btn-sm btn-outline-dark rounded-pill">
+                      Ver más
+                    </a>
+                  </div>
                 </div>
-                <div className="flex-grow-1">
-                  <h6 className="fw-bold mb-1">{ev.name}</h6>
-                  <p className="small text-secondary mb-1">
-                    <i className="bi bi-geo-alt-fill me-1"></i>{ev.place}
-                  </p>
-                  <p className="small text-secondary mb-2">{ev.stand}</p>
-                  <a href="#contacto" className="btn btn-sm btn-outline-dark rounded-pill">
-                    Ver más
-                  </a>
-                </div>
-              </div>
+              </Reveal>
             </div>
           ))}
         </div>

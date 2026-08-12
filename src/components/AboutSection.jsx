@@ -1,9 +1,11 @@
+import Reveal from './Reveal'
+
 export default function AboutSection() {
   return (
     <section id="nosotros" className="py-5 bg-light">
       <div className="container">
         <div className="row g-4 align-items-center">
-          <div className="col-lg-6">
+          <Reveal as="div" className="col-lg-6">
             <span className="badge-pill-soft mb-2">
               <i className="bi bi-info-circle-fill me-1"></i>Sobre nosotros
             </span>
@@ -17,9 +19,9 @@ export default function AboutSection() {
               Trabajamos sobre modelos ya existentes y también imprimimos tus propios diseños
               listos (archivos STL) de objetos simples: cajas, marcos, piezas y accesorios.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="col-lg-6">
+          <Reveal as="div" className="col-lg-6" delay={0.15}>
             <div className="card border-0 shadow-sm rounded-4 p-4">
               <h6 className="fw-bold mb-3">
                 <i className="bi bi-clipboard-check-fill text-fans3d-blue me-2"></i>
@@ -38,7 +40,7 @@ export default function AboutSection() {
                 <li className="mb-2"><i className="bi bi-dash-circle text-secondary me-2"></i>Escultura o diseño digital de personajes o personas</li>
               </ul>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

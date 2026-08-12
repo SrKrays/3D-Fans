@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { categories, featuredProducts } from '../data/mockData'
 import ProductModal from '../components/ProductModal'
 import ProductThumb from '../components/ProductThumb'
+import { gsap, Flip } from '../lib/gsapSetup'
 
 export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -10,13 +11,23 @@ export default function CatalogPage() {
   const [search, setSearch] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
 
+  const gridRef = useRef(null)
+  const flipStateRef = useRef(null)
+
   // Si llegamos con ?categoria=... desde Home, respetarlo.
   useEffect(() => {
     const fromUrl = searchParams.get('categoria')
     if (fromUrl) setActiveCategory(fromUrl)
   }, [searchParams])
 
+  function captureFlipState() {
+    if (gridRef.current) {
+      flipStateRef.current = Flip.getState(gridRef.current.querySelectorAll('.flip-card'))
+    }
+  }
+
   function handleCategoryClick(name) {
+    captureFlipState()
     setActiveCategory(name)
     if (name === 'Todos') {
       searchParams.delete('categoria')
@@ -33,6 +44,21 @@ export default function CatalogPage() {
       return matchesCategory && matchesSearch
     })
   }, [activeCategory, search])
+
+  // Cuando cambia el resultado filtrado (por click en categoría), las cards
+  // que se reacomodan lo hacen animadas en vez de "saltar" a su lugar nuevo.
+  useLayoutEffect(() => {
+    if (!flipStateRef.current) return
+    Flip.from(flipStateRef.current, {
+      duration: 0.5,
+      ease: 'power1.inOut',
+      stagger: 0.03,
+      absolute: true,
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.03 }),
+      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.85, duration: 0.3 }),
+    })
+    flipStateRef.current = null
+  }, [filteredProducts])
 
   return (
     <>
@@ -106,9 +132,9 @@ export default function CatalogPage() {
 
             {/* Grid de productos */}
             <div className="col-lg-9 order-1 order-lg-2">
-              <div className="row g-4">
+              <div className="row g-4" ref={gridRef}>
                 {filteredProducts.map((product) => (
-                  <div className="col-6 col-md-4" key={product.id}>
+                  <div className="col-6 col-md-4 flip-card" key={product.id}>
                     <div
                       className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
                       role="button"

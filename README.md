@@ -32,7 +32,17 @@ npm install
 npm run dev
 ```
 
-Se abre en `http://localhost:5173`. Dependencias nuevas: `react-router-dom` (multi-página), `react-social-media-embed` (embeds de Instagram) y `react-lazy-load-image-component` (fotos de producto con tamaño/recorte consistente y efecto de carga).
+Se abre en `http://localhost:5173`. Dependencias nuevas: `react-router-dom` (multi-página), `react-social-media-embed` (embeds de Instagram), `react-lazy-load-image-component` (fotos de producto con tamaño/recorte consistente) y `gsap` (animaciones — ver abajo).
+
+## Animaciones (GSAP)
+
+Se agregó `gsap` con los plugins ScrollTrigger, SplitText, DrawSVGPlugin y Flip, registrados una sola vez en `src/lib/gsapSetup.js`. Desde GSAP 3.13 (2025) todos los plugins son gratis, no hace falta ninguna licencia de Club GSAP ni paquete extra — con `npm install` alcanza.
+
+Dónde se usa cada uno:
+- **Hero** (`Hero.jsx`): el título se separa en letras (SplitText) y entra en cascada al cargar; hay un garabato SVG debajo del título que se "dibuja" solo (DrawSVGPlugin), como si lo imprimiera una boquilla; y un parallax sutil del texto al scrollear (ScrollTrigger). El zoom lento y continuo del banner ("Ken Burns") es CSS puro (`.hero-kenburns` en `index.css`), no necesita GSAP.
+- **FandomMarquee** (`FandomMarquee.jsx`): franja oscura con las franquicias que se trabajan, en loop infinito.
+- **ProcessSection** (`ProcessSection.jsx`): reemplaza el viejo "Cómo lo hacemos" con una versión honesta (elegís/mandás el modelo → lo imprimimos → pintamos y entregamos), con scroll-storytelling: la sección se fija en pantalla mientras scrolleás y los 3 pasos se van revelando en secuencia con una barra de progreso.
+- **CatalogPage**: al cambiar de categoría, las cards del catálogo se reacomodan animadas en vez de "saltar" (GSAP Flip).
 
 ## Cambios de esta vuelta
 
