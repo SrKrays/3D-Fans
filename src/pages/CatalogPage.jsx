@@ -45,8 +45,9 @@ export default function CatalogPage() {
           <p className="text-secondary mb-4">Explorá todos nuestros productos.</p>
 
           <div className="row g-4">
-            {/* Filtros */}
-            <div className="col-lg-3">
+            {/* Filtros: en celular/tablet van debajo del grid, para que los
+                productos se vean apenas se entra a la tienda. */}
+            <div className="col-lg-3 order-2 order-lg-1">
               <div className="card border-0 shadow-sm rounded-4 p-3 mb-3">
                 <label className="form-label fw-semibold small">Buscar</label>
                 <div className="input-group">
@@ -65,7 +66,7 @@ export default function CatalogPage() {
 
               <div className="card border-0 shadow-sm rounded-4 p-3">
                 <h6 className="fw-bold mb-3">Categorías</h6>
-                <div className="d-flex flex-column gap-1">
+                <div className="d-flex flex-row flex-wrap flex-lg-column gap-2 gap-lg-1">
                   <button
                     className={`btn btn-sm text-start rounded-pill ${
                       activeCategory === 'Todos' ? 'btn-fans3d-red' : 'btn-light'
@@ -104,7 +105,7 @@ export default function CatalogPage() {
             </div>
 
             {/* Grid de productos */}
-            <div className="col-lg-9">
+            <div className="col-lg-9 order-1 order-lg-2">
               <div className="row g-4">
                 {filteredProducts.map((product) => (
                   <div className="col-6 col-md-4" key={product.id}>

@@ -21,7 +21,7 @@ export default function Header() {
         </button>
 
         <div className="collapse navbar-collapse" id="mainNav">
-          <ul className="navbar-nav navbar-nav-fans3d mx-auto gap-lg-4 mt-10 mt-lg-1">
+          <ul className="navbar-nav navbar-nav-fans3d mx-auto gap-3 gap-lg-4 mt-3 mt-lg-1">
             <li className="nav-item">
               <Link className="nav-link fw-semibold text-fans3d-red" to="/">
                 <i className="bi bi-house-door-fill me-1"></i>Inicio

@@ -83,8 +83,8 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(4rem, 4vw, 4rem); /* -20% del 5rem anterior */
-  line-height: 1;
+  font-size: clamp(2.2rem, 8vw, 4rem); /* -20% del 5rem anterior, escala en celular */
+  line-height: 1.05;
 }
 
 .hero-subtitle {

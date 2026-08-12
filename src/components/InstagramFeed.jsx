@@ -23,7 +23,11 @@ export default function InstagramFeed() {
         <div className="row g-3 justify-content-center">
           {instagramPosts.map((post) => (
             <div className="col-12 col-sm-6 col-lg-4 d-flex justify-content-center" key={post.id}>
-              <InstagramEmbed url={post.url} width={328} captioned={false} />
+              {/* maxWidth + overflow hidden por si el embed de Instagram (ancho
+                  fijo en px) es más ancho que la pantalla en celulares chicos. */}
+              <div style={{ width: '100%', maxWidth: 320, overflow: 'hidden' }}>
+                <InstagramEmbed url={post.url} width={280} captioned={false} />
+              </div>
             </div>
           ))}
         </div>
