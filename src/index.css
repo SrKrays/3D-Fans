@@ -1,0 +1,271 @@
+:root {
+  --f3d-red: #e63946;
+  --f3d-blue: #2a6fdb;
+  --f3d-yellow: #ffc93c;
+  --f3d-dark: #1c1c1e;
+  --f3d-bg: #fafafa;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: var(--f3d-bg);
+  color: var(--f3d-dark);
+}
+
+.navbar-brand-fans3d {
+  font-weight: 1000;
+  font-size: 3.5rem; /* tamaño del texto "Fans3D" del logo */
+}
+
+.navbar-nav-fans3d .nav-link {
+  font-size: 1.4rem; /* tamaño de los links del menú (Inicio, Catálogo, etc.) */
+}
+
+.btn-fans3d-yellow {
+  background-color: var(--f3d-yellow);
+  border: none;
+  font-weight: 600;
+  color: var(--f3d-dark);
+}
+.btn-fans3d-yellow:hover {
+  background-color: #ffbf00;
+  color: var(--f3d-dark);
+}
+
+.btn-fans3d-red {
+  background-color: var(--f3d-red);
+  border: none;
+  font-weight: 600;
+  color: #fff;
+}
+.btn-fans3d-red:hover {
+  background-color: #d12d3a;
+  color: #fff;
+}
+
+.text-fans3d-blue {
+  color: var(--f3d-blue);
+}
+.text-fans3d-red {
+  color: var(--f3d-red);
+}
+
+.hero-section {
+  /* Degradé claro superpuesto a la izquierda para que el texto se lea bien
+     encima de la imagen, sin depender de que el banner traiga zona en blanco
+     perfectamente calculada. */
+  background-image:
+    linear-gradient(to right, rgba(255, 248, 230, 0.96) 0%, rgba(255, 248, 230, 0.75) 34%, rgba(255, 248, 230, 0) 58%),
+    url('/img/banner.png');
+  background-size: cover, cover;
+  background-position: left center, right center;
+  background-repeat: no-repeat, no-repeat;
+  background-color: #fff8e6;
+  padding: 4.5rem 0;
+  aspect-ratio: 1920 / 640;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Difumina el borde inferior del banner hacia el color de fondo de la página,
+   para que el salto del banner (muy saturado) a la siguiente sección
+   (blanca/gris) no se sienta tan brusco. */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, var(--f3d-bg) 100%);
+  pointer-events: none;
+}
+
+.hero-title {
+  font-size: clamp(5rem, 5vw, 5rem);
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+}
+
+.hero-features {
+  font-size: 1rem; /* tamaño de "Impresión 3D de alta calidad", etc. */
+}
+.hero-features i {
+  font-size: 1rem; /* tamaño de los iconitos de esa fila */
+}
+
+@media (max-width: 991px) {
+  .hero-section {
+    background-position: center 20%;
+    padding: 3rem 0;
+  }
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.72);
+  }
+  .hero-section .container {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.badge-pill-soft {
+  background-color: #eef4ff;
+  color: var(--f3d-blue);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.category-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  background: #fff;
+}
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+.category-card .cat-thumb {
+  height: 190px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #fff;
+}
+.category-card .cat-thumb-photo {
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.category-card .cat-thumb-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.category-card .cat-thumb-icon {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Etiqueta con el nombre de la categoría, superpuesta abajo de la imagen,
+   con un degradé oscuro para que el texto blanco se lea bien encima de
+   cualquier foto. */
+.category-card .cat-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 0.5rem 0.6rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem; /* subí/bajá este valor si lo querés más grande o chico */
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  overflow-wrap: break-word;
+}
+.category-card .cat-label-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.category-card .cat-label-plain {
+  padding-top: 0.75rem;
+}
+
+.step-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.instagram-thumb {
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.event-card {
+  border-radius: 14px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+.event-date-badge {
+  min-width: 64px;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.product-card-thumb {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background-color: #f1f1f1;
+}
+.product-card-thumb img,
+.product-card-thumb .lazy-load-image-background {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.product-card-thumb img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.product-photo-lg {
+  height: 260px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.product-photo-lg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.navbar-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+footer a:hover {
+  color: #fff;
+}
