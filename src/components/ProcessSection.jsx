@@ -114,7 +114,7 @@ export default function ProcessSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-5 process-section">
+    <section ref={sectionRef} className="py-4 py-lg-5 process-section">
       <div className="container" ref={pinRef}>
         <h2 className="fw-bold mb-2">
           <i className="bi bi-gear-fill text-fans3d-blue me-2"></i>
@@ -130,16 +130,18 @@ export default function ProcessSection() {
 
         <div className="row g-4">
           {steps.map((step, i) => (
-            <div className="col-md-4" key={step.n}>
+            <div className="col-12 col-md-4" key={step.n}>
               <div
                 className="process-step-card h-100"
                 ref={(el) => (cardRefs.current[i] = el)}
               >
-                <div className="process-step-icon" style={{ backgroundColor: step.color }}>
-                  <i className={`bi ${step.icon}`}></i>
-                </div>
-                <div className="step-circle mt-3 mb-2" style={{ backgroundColor: step.color }}>
-                  {step.n}
+                <div className="process-step-top">
+                  <div className="process-step-icon" style={{ backgroundColor: step.color }}>
+                    <i className={`bi ${step.icon}`}></i>
+                  </div>
+                  <div className="step-circle" style={{ backgroundColor: step.color }}>
+                    {step.n}
+                  </div>
                 </div>
                 <h5 className="fw-bold">{step.title}</h5>
                 <p className="text-secondary mb-0">{step.text}</p>

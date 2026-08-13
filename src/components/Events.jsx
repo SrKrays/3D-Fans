@@ -4,7 +4,7 @@ import Reveal from './Reveal'
 
 export default function Events() {
   return (
-    <section id="expos" className="py-5 bg-light">
+    <section id="expos" className="py-4 py-lg-5 bg-light">
       <div className="container">
         <h2 className="fw-bold mb-4">
           <i className="bi bi-calendar-event-fill text-fans3d-blue me-2"></i>
@@ -13,7 +13,7 @@ export default function Events() {
 
         <div className="row g-3">
           {events.map((ev, i) => (
-            <div className="col-md-4" key={ev.id}>
+            <div className="col-12 col-sm-6 col-md-4" key={ev.id}>
               <Reveal delay={i * 0.08} className="d-block h-100">
                 <div className="event-card bg-white p-3 h-100 d-flex gap-3">
                   <div className="event-date-badge" style={{ backgroundColor: ev.color }}>

@@ -119,11 +119,17 @@ export default function Hero() {
     <section id="inicio" className="hero-section hero-kenburns" ref={sectionRef}>
       {/* Capas de fondo, en orden: foto (siempre "cover", nunca se deforma,
           el zoom Ken Burns se hace con transform:scale) → degradé de
-          legibilidad → fade inferior → velo blanco extra en celular. */}
-      <div className="hero-bg-image"></div>
-      <div className="hero-legibility-gradient"></div>
-      <div className="hero-bottom-fade"></div>
-      <div className="hero-mobile-overlay"></div>
+          legibilidad → fade inferior → velo blanco extra en celular. Todo
+          va adentro de un wrapper con overflow:hidden propio, para que
+          recortar la foto agrandada no le ponga un tope estricto de altura
+          a la sección (que necesita poder crecer para que el texto entre
+          cómodo en celular). */}
+      <div className="hero-visual-layer">
+        <div className="hero-bg-image"></div>
+        <div className="hero-legibility-gradient"></div>
+        <div className="hero-bottom-fade"></div>
+        <div className="hero-mobile-overlay"></div>
+      </div>
 
       {/* Brillo que sigue al cursor + destellos titilando — puramente
           decorativo, no bloquea clicks (pointer-events: none), y solo se
@@ -172,7 +178,7 @@ export default function Hero() {
               Figuras, accesorios y piezas únicas de tus universos favoritos.
             </p>
 
-            <div className="d-flex flex-wrap gap-3 mb-4">
+            <div className="d-flex flex-wrap gap-3 mb-4 hero-cta-group">
               <Link to="/catalogo" className="btn btn-fans3d-red rounded-pill px-4 py-2 fs-6">
                 <i className="bi bi-bag-fill me-2"></i>Ver catálogo
               </Link>

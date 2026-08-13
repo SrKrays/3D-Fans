@@ -6,14 +6,14 @@ import { productImageUrl } from '../utils/images'
 
 export default function Categories() {
   return (
-    <section id="categorias" className="py-5">
+    <section id="categorias" className="py-4 py-lg-5">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
           <h2 className="fw-bold mb-0">
             <i className="bi bi-grid-fill text-fans3d-blue me-2"></i>
             Explorá por categorías
           </h2>
-          <Link to="/catalogo" className="btn btn-sm btn-outline-dark rounded-pill">
+          <Link to="/catalogo" className="btn btn-sm btn-outline-dark rounded-pill btn-tap-target">
             Ver toda la tienda <i className="bi bi-arrow-right ms-1"></i>
           </Link>
         </div>

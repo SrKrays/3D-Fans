@@ -3,7 +3,7 @@ import { instagramPosts } from '../data/mockData'
 
 export default function InstagramFeed() {
   return (
-    <section className="py-5">
+    <section className="py-4 py-lg-5">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
           <h2 className="fw-bold mb-0">

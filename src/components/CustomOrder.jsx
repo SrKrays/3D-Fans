@@ -43,7 +43,7 @@ export default function CustomOrder() {
   }, [submitted])
 
   return (
-    <section id="personalizados" className="py-5">
+    <section id="personalizados" className="py-4 py-lg-5">
       <div className="container">
         <div className="row align-items-center g-5">
           <Reveal as="div" className="col-lg-5">

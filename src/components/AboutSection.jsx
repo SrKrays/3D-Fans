@@ -2,7 +2,7 @@ import Reveal from './Reveal'
 
 export default function AboutSection() {
   return (
-    <section id="nosotros" className="py-5 bg-light">
+    <section id="nosotros" className="py-4 py-lg-5 bg-light">
       <div className="container">
         <div className="row g-4 align-items-center">
           <Reveal as="div" className="col-lg-6">

@@ -26,6 +26,16 @@ body {
   font-size: 0.95rem; /* tamaño de los links del menú (Inicio, Catálogo, etc.) */
 }
 
+/* Área táctil mínima recomendada (44x44) para el botón hamburguesa,
+   sin agrandar el ícono visualmente. */
+.navbar-toggler {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-fans3d-yellow {
   background-color: var(--f3d-yellow);
   border: none;
@@ -62,7 +72,23 @@ body {
   display: flex;
   align-items: center;
   position: relative;
-  overflow: hidden; /* recorta la foto cuando el Ken Burns la agranda (transform: scale) */
+  /* OJO: sin overflow:hidden acá. Un aspect-ratio combinado con
+     overflow:hidden deja de ser una "sugerencia" y se vuelve estricto —
+     el navegador NO deja crecer la caja aunque el contenido (título,
+     subtítulo, botones) no entre, y todo el texto queda aplastado en una
+     franja mínima. Por eso el recorte de la foto se hace en un wrapper
+     aparte (.hero-visual-layer) que no contiene el texto. */
+}
+
+/* Wrapper que sólo tiene las capas visuales de fondo (foto, degradés,
+   velo). overflow:hidden acá SÍ es seguro: al ser absolute+inset:0, no
+   afecta el tamaño de .hero-section, solo recorta lo que se sale de sus
+   propios bordes (por ejemplo la foto agrandada por el Ken Burns). */
+.hero-visual-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
 }
 
 /* Capa 1 (la de más abajo): la foto del banner, sola. Siempre con
@@ -173,9 +199,24 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(2.2rem, 8vw, 4rem); /* -20% del 5rem anterior, escala en celular */
+  font-size: 2rem; /* 32px en celular chico */
   line-height: 1.05;
   perspective: 400px;
+}
+@media (min-width: 380px) {
+  .hero-title {
+    font-size: 2.25rem; /* 36px */
+  }
+}
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 2.75rem; /* 44px tablet */
+  }
+}
+@media (min-width: 992px) {
+  .hero-title {
+    font-size: 3.5rem; /* 56px desktop */
+  }
 }
 
 .hero-subtitle {
@@ -196,10 +237,19 @@ body {
 
 @media (max-width: 991px) {
   .hero-section {
-    padding: 3rem 0;
+    padding: 3.5rem 0;
   }
   .hero-bg-image {
     background-position: center 20%;
+  }
+}
+
+/* Botones del hero: uno al lado del otro cuando entran cómodos, apilados
+   a ancho completo en celulares muy chicos para que no queden apretados. */
+@media (max-width: 479px) {
+  .hero-cta-group .btn {
+    flex: 1 1 100%;
+    text-align: center;
   }
 }
 
@@ -207,6 +257,10 @@ body {
   overflow: hidden;
   background: var(--f3d-dark);
   padding: 0.85rem 0;
+  /* Fundido en ambos bordes: cualquier palabra que esté entrando/saliendo
+     del viewport se desvanece en vez de cortarse de golpe. */
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 .fandom-marquee-track {
   display: flex;
@@ -259,6 +313,11 @@ body {
   font-size: 2.5rem;
   color: #fff;
 }
+@media (max-width: 767px) {
+  .category-card .cat-thumb {
+    height: 190px; /* más aire para la foto en celular, con 2 columnas */
+  }
+}
 .category-card .cat-thumb-photo {
   overflow: hidden;
   background-color: #f1f1f1;
@@ -294,7 +353,7 @@ body {
   overflow-wrap: break-word;
 }
 .category-card .cat-label-overlay {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0) 100%);
 }
 .category-card .cat-label-plain {
   padding-top: 0.75rem;
@@ -330,6 +389,7 @@ body {
   justify-content: center;
   color: #fff;
   font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .step-circle {
@@ -342,6 +402,25 @@ body {
   justify-content: center;
   font-weight: 700;
   flex-shrink: 0;
+}
+
+/* Fila icono + número: en celular van uno al lado del otro (más compacto,
+   menos "torre" de elementos apilados antes del título). En desktop se
+   mantiene el apilado vertical original (icono arriba, número abajo). */
+.process-step-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+@media (min-width: 768px) {
+  .process-step-top {
+    display: block;
+  }
+  .process-step-top .step-circle {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .instagram-thumb {
@@ -410,6 +489,15 @@ body {
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+/* Área táctil mínima (44px alto) para botones chicos tipo "Ver toda la
+   tienda" sin agrandar demasiado el texto. */
+.btn-tap-target {
+  min-height: 44px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
 }
 
 footer a {
