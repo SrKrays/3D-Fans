@@ -117,6 +117,14 @@ export default function Hero() {
 
   return (
     <section id="inicio" className="hero-section hero-kenburns" ref={sectionRef}>
+      {/* Capas de fondo, en orden: foto (siempre "cover", nunca se deforma,
+          el zoom Ken Burns se hace con transform:scale) → degradé de
+          legibilidad → fade inferior → velo blanco extra en celular. */}
+      <div className="hero-bg-image"></div>
+      <div className="hero-legibility-gradient"></div>
+      <div className="hero-bottom-fade"></div>
+      <div className="hero-mobile-overlay"></div>
+
       {/* Brillo que sigue al cursor + destellos titilando — puramente
           decorativo, no bloquea clicks (pointer-events: none), y solo se
           activan en desktop (ver gsap.matchMedia arriba + CSS). */}
