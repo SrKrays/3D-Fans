@@ -148,22 +148,6 @@ body {
   z-index: 1;
 }
 
-/* Capa 4 (solo celular/tablet): velo blanco extra para más contraste,
-   reemplaza el ::before que usaba antes (ahora la foto es un div real,
-   no un pseudo-elemento, así que no hay conflicto de nombres). */
-.hero-mobile-overlay {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.72);
-  z-index: 1;
-}
-@media (max-width: 991px) {
-  .hero-mobile-overlay {
-    display: block;
-  }
-}
-
 .hero-squiggle {
   display: block;
   margin-top: -0.5rem;

@@ -128,7 +128,6 @@ export default function Hero() {
         <div className="hero-bg-image"></div>
         <div className="hero-legibility-gradient"></div>
         <div className="hero-bottom-fade"></div>
-        <div className="hero-mobile-overlay"></div>
       </div>
 
       {/* Brillo que sigue al cursor + destellos titilando — puramente
