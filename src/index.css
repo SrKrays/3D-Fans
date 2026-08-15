@@ -225,23 +225,20 @@ body {
   }
 }
 
-/* Encuadre del banner (imagen real: 2172x724px) en pantallas angostas.
-   Con "cover", cuanto más angosta y alta es la caja, más se recorta la
-   imagen por los costados — así que hay que correr el foco horizontal
-   hacia donde están los personajes (aprox. desde x=1090px en adelante:
-   Demogorgon, Goku, AT-AT) en vez de dejarlo centrado, que mostraría
-   sobre todo el espacio en blanco de la izquierda.
-   Son valores a ojo — si en el celular real algún personaje queda cortado
-   de más, corregí el % (más alto = corre el encuadre hacia la derecha/AT-AT,
-   más bajo = hacia la izquierda/Demogorgon). */
+/* Imágenes de banner dedicadas por tamaño de pantalla (en vez de recortar
+   a ojo con background-position una sola imagen panorámica). Cada una ya
+   viene compuesta con los personajes bien encuadrados para su propia
+   proporción, así "cover" casi no tiene que recortar nada. */
 @media (max-width: 991px) and (min-width: 768px) {
   .hero-bg-image {
-    background-position: 80% 18%; /* tablet: entran Demogorgon, Goku y casi todo el AT-AT */
+    background-image: url('/img/banner-table.png');
+    background-position: right center;
   }
 }
 @media (max-width: 767px) {
   .hero-bg-image {
-    background-position: 72% 15%; /* celular: prioriza a Goku, con parte de Demogorgon a la izquierda */
+    background-image: url('/img/celular.png');
+    background-position: right center;
   }
 }
 
